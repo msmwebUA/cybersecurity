@@ -94,7 +94,7 @@ nav a:hover {
 .side {
     grid-area: sidebar;
     display: flex;
-    justify-content: end;
+    justify-content: center;
 }
 
 /* FOOTER */
@@ -125,6 +125,9 @@ nav a:hover {
     nav ul {
         display: flex;
         justify-content: space-around;
+    }
+    .side {
+        justify-content: end;
     }
 }
 
