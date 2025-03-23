@@ -1,1 +1,152 @@
-<h1>This is encryption page</h1>
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./static/styles.css">
+    <title>Kyberturvallisuus</title>
+</head>
+<body>
+    <!-- page wrapper -->
+    <div class="wrapper">
+        <!-- grid header -->
+        <header class="main-header">
+            <span class="logo">SERGIIN KYBERTURVALLISUUS</span>
+        </header>
+        <!-- grid nav -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Kotisivu</a></li>
+                <li><a href="encryption.html">Salausmenetelmät</a></li>
+            </ul>
+        </nav>
+        <!-- grid content -->
+        <article class="content">
+            <h1>Salausmenetelmät</h1>
+            <p>
+                Salaus on tapa muuttaa tietoja niin, että vain valtuutetut henkilöt voivat lukea niitä. 
+                Salausprosessissa selkeä teksti muunnetaan salatekstiksi salausavaimen avulla. 
+                Salausavain on joukko tunnettuja matemaattisia funktioita, 
+                joista sekä lähettäjä että vastaanottaja ovat sopineet. 
+                Salauksen purkamisen tai salatun tiedon muuntamisen voi suorittaa kuka tahansa henkilö, 
+                jolla on avain. Tästä syystä kryptografit työskentelevät jatkuvasti kehittääkseen monimutkaisempia avaimia. 
+                Turvallisempi salaus käyttää erittäin monimutkaisia avaimia, 
+                mikä tekee purkuprosessin ilman avainta toiminnallisesti mahdottomaksi hakkereille.
+            </p>
+            <h3>Symmetrinen ja asymmetrinen salaus</h3>
+            <p>
+                Kaksi pääasiallista salaustyyppiä ovat symmetrinen ja asymmetrinen salaus. 
+                Symmetrisessä salauksessa käytetään vain yhtä avainta, joka käyttävät kaikki osapuolet. 
+                Asymmetrinen salaus käyttää kaksi avainta: yhtä avainta salaukseen (“public key”) ja toista purkamiseen (“private key”). 
+                Public key voidaan jakaa vapaasti muiden kanssa, private key pitää olla salassa.
+            </p>
+            <h4>Symmetrinen salaus:</h4>
+                <ul>
+                    <li>Suorittaa toiminnot nopeammin kuin asymmetriset algoritmit, mikä on tärkeää suurille tietomäärille.</li>
+                    <li>Vaatii vähemmän prosessointitehoa, mikä on hyödyllistä laitteissa, joiden resurssit ovat rajalliset.</li>
+                    <li>Algoritmit, kuten AES-256, hyvin kestävät halkeilua.</li>
+                </ul>
+            <p>
+                Oletetaan, että yrityksellä on sisäinen tietojen tallennusjärjestelmä, 
+                joka on vain työntekijöiden käytettävissä. Tiedostojen luottamuksellisuuden varmistamiseksi käytetään symmetristä algoritmia. 
+                Kaikki tiedostot salataan ennen tallentamista ja puretaan salauksen yhteydessä.
+            </p>
+            <p>
+                Symmetrisellä salauksella on heikkouksia:
+                <ul>
+                    <li>Jos yksi työntekijä haluaa jakaa salatun tiedoston toisen kanssa, avain on jaettava, mikä voi olla tietoturvaheikkous.</li>
+                    <li>Yhtä avainta voivat käyttää monet ihmiset, mikä lisää tietovuodon riskiä.</li>
+                </ul>
+            </p>
+            <p>
+                Symmetrinen salaus soveltuu parhaiten suojaamaan paikallisesti tallennettuja tiedostoja (kiintolevyt, tietokannat), 
+                salaamaan tietoja VPN-tunneleissa ja laitteissa, joissa on rajalliset laskentaresurssit (älypuhelimet, IoT).
+            </p>
+            <h4>Asymmetrinen salaus</h4>
+                <ul>
+                    <li>Yksityistä avainta ei tarvitse lähettää, mikä eliminoi symmetristen menetelmien suurimman haavoittuvuuden.</li>
+                    <li>Käytetään asiakirjojen ja viestien aitouden tarkistamiseen.</li>
+                    <li>SSL/TLS käyttää asymmetristä salausta suojatun yhteyden muodostamiseen Internetiin.</li>
+                </ul>
+            <p>
+                Esimerkiksi verkkopankki käyttää RSA:ta tai ECC:tä turvallisen yhteyden muodostamiseen asiakkaan ja palvelimen välillä. 
+                Kun kirjaudut verkkopankkiin, selain tarkistaa sivuston digitaalisen varmenteen julkisella avaimellaan. 
+                Salattu yhteys muodostetaan sitten ilman tarvetta lähettää salaista avainta.
+            </p>
+            <p>
+                Asymmetrisen salauksen heikkoukset:
+                <ul>
+                    <li>Toiminnot vievät kauemmin monimutkaisista laskelmista johtuen.</li>
+                    <li>Vaatii enemmän prosessointitehoa.</li>
+                </ul>
+            </p>
+            <p>
+                Asymmetrinen salaus soveltuu parhaiten verkkoyhteyksien turvaamiseen (HTTPS, VPN, digitaalinen allekirjoitus), 
+                avainten siirtoon symmetrisissä järjestelmissä (hybridimenetelmät) sekä sähköisiin maksuihin, 
+                digitaalisiin sertifikaatteihin ja blockchain-tapahtumiin.
+            </p>
+            <p>
+                Todellisessa elämässä optimaalinen vaihtoehto on hybridilähestymistapa, 
+                jossa symmetrisen avaimen välittämiseen käytetään asymmetristä salausta 
+                ja päätietojen salaukseen symmetristä salausta.
+            </p>
+        </article>
+        <!-- grid sidebar -->
+        <aside class="side">
+            <div class="newsfeed">
+                <!-- start sw-rss-feed code --> 
+                <script type="text/javascript"> 
+                    rssfeed_url = new Array(); 
+                    rssfeed_url[0]="https://feeds.feedburner.com/TheHackersNews";  
+                    rssfeed_frame_width="250"; 
+                    rssfeed_frame_height="600"; 
+                    rssfeed_scroll="on"; 
+                    rssfeed_scroll_step="6"; 
+                    rssfeed_scroll_bar="off"; 
+                    rssfeed_target="_blank"; 
+                    rssfeed_font_size="12"; 
+                    rssfeed_font_face=""; 
+                    rssfeed_border="on"; 
+                    rssfeed_css_url="https://feed.surfing-waves.com/css/style6.css"; 
+                    rssfeed_title="on"; 
+                    rssfeed_title_name=""; 
+                    rssfeed_title_bgcolor="#3366ff"; 
+                    rssfeed_title_color="#fff"; 
+                    rssfeed_title_bgimage=""; 
+                    rssfeed_footer="off"; 
+                    rssfeed_footer_name="rss feed"; 
+                    rssfeed_footer_bgcolor="#fff"; 
+                    rssfeed_footer_color="#333"; 
+                    rssfeed_footer_bgimage=""; 
+                    rssfeed_item_title_length="50"; 
+                    rssfeed_item_title_color="#666"; 
+                    rssfeed_item_bgcolor="#fff"; 
+                    rssfeed_item_bgimage=""; 
+                    rssfeed_item_border_bottom="on"; 
+                    rssfeed_item_source_icon="off"; 
+                    rssfeed_item_date="off"; 
+                    rssfeed_item_description="on"; 
+                    rssfeed_item_description_length="120"; 
+                    rssfeed_item_description_color="#666"; 
+                    rssfeed_item_description_link_color="#333"; 
+                    rssfeed_item_description_tag="off"; 
+                    rssfeed_no_items="0"; 
+                    rssfeed_cache = "fa3e4a9d370a34f62044c2418f45cecf"; 
+                </script>
+                <script type="text/javascript" src="https://feed.surfing-waves.com/js/rss-feed.js"></script> 
+                <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
+                <div style="color:#ccc;font-size:10px; text-align:right; width:250px;">
+                    powered by <a href="https://surfing-waves.com" rel="noopener" target="_blank" style="color:#ccc;">Surfing Waves</a>
+                </div> 
+                <!-- end sw-rss-feed code -->
+            </div>
+        </aside>
+        <!-- grid footer -->
+        <footer class="main-footer">
+            <span>
+                Sergii Mishchaniuk<br>
+                <strong>SAMIEDU 2025 &#169;</strong>
+            </span>
+        </footer>
+    </div>
+</body>
+</html>
