@@ -29,7 +29,7 @@
         "footer";
 }
 
-@media (max-width: 500px) {
+@media (min-width: 500px) {
     .wrapper {
         grid-template-columns: 1fr 3fr;
         grid-template-areas: 
@@ -44,7 +44,7 @@
     }
 }
 
-@media (max-width: 700) {
+@media (min-width: 700) {
     .wrapper {
         grid-template-columns: 1fr 4fr 1fr;
         grid-template-areas:
