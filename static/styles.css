@@ -40,11 +40,11 @@
     }
     nav ul {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
     }
 }
 
-@media (min-width: 700) {
+@media (min-width: 700px) {
     .wrapper {
         grid-template-columns: 1fr 4fr 1fr;
         grid-template-areas:
