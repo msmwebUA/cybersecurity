@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="./static/styles.css">
+    <script src="./js/script.js"></script>
     <title>Kyberturvallisuus</title>
 </head>
 <body>
@@ -10,7 +11,7 @@
     <div class="wrapper">
         <!-- grid header -->
         <header class="main-header">
-            <span class="logo">SERGIIN KYBERTURVALLISUUS</span>
+            <a class="logo" href="index.html">SERGIIN KYBERTURVALLISUUS</a>
         </header>
         <!-- grid nav -->
         <nav class="main-nav">
@@ -89,6 +90,292 @@
                 jossa symmetrisen avaimen välittämiseen käytetään asymmetristä salausta 
                 ja päätietojen salaukseen symmetristä salausta.
             </p>
+            <p>
+                <strong>Advanced Encryption Standard (AES)</strong> ja <strong>Rivest-Shamir-Adleman (RSA)</strong> ovat merkittäviä salausalgoritmeja, 
+                joilla on selviä teknisiä eroja. AES on symmetrisen ja RSA on asymmetrisen avaimen algoritmit. 
+                AES loistaa tehokkaassa tiedonsalauksessa, kun taas RSA:n vahvuus on suojatussa avainten vaihdossa ja digitaalisissa allekirjoituksissa.
+            </p>
+            <h4>AES</h4>
+            <p>
+                AES toimii kiinteillä 128 bitin lohkokooilla. Tässä on peruskatsaus AES-salauksen toiminnasta:
+                <ol>
+                    <li>Lähettäjä ja vastaanottaja sopivat AES-avaimesta, jota käytetään salaukseen/purkamiseen.</li>
+                    <li>Selkotekstidata on jaettu 128-bittisiin lohkoihin. Tarvittaessa viimeiseen lohkoon lisätään merkkeja.</li>
+                    <li>Salaus käyttää sarjan korvauksia ja muunnoksia jokaiseen lohkoon salaisen avaimen avulla. Tämä tuottaa salatekstin.</li>
+                    <li>Käyttämällä samaa jaettua AES-avainta vastaanottaja purkaa jokaisen salatekstilohkon ja saa selkeän tekstin.</li>
+                </ol>
+                AES:n turvallisuus perustuu avaimen salaisuuteen ja AES-lohkon vaihtojen/muunnosten monimutkaisuuteen. 
+                AES tukee avainkokoja 128, 192 tai 256 bittiä. 128-bittiset avaimet ovat minimi, ja 256-bittinen tarjoaa vahvimman suojan. 
+                Suuremmat avainkoot lisäävät muunnoksia permutaatioihin. AES-avaimet tulisi luoda satunnaisesti jokaista salausprosessia varten. 
+                Avaimia ei saa koskaan käyttää uudelleen jos se on mahdollista. AES-salaus prosessi koostuu neljästä päätoiminnosta, 
+                joita sovelletaan kuhunkin 128-bittiseen lohkoon (<a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">SubBytes, ShiftRows, MixColumns, AddRoundKey</a>).
+            </p>
+            <h4>Koodataan</h4>
+            <p>
+                Kirjoitetaan Python koodi ja tehdään pienen ohjelman, joka tarjoa kaksi vaihtoehtoa: 
+                salaa käyttäjän syöttämä tekstin AES algoritmilla tai purkaa "ciphertext" takaisin tavalliseen muotoon.
+                Muista ensin installoida pyCrypro kirjasto, sieltä importoidaan AES mooduli.
+                Koodi sisältää perus validointia, eli tarkistetaan että käyttäjä antaa kelpoisia tietoja.
+                Ohjelma palauta ciphertext HEX-muodossa ja vaatii, että samassa muodossa sille annetaan salateksti purkamiseen.
+                Seuraavassa tapauksessa salaus tehdään CBC-mode:ssa (<a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Cipher Block Chaining</a>), siksi viimeinen vajaa 128-bitti lohko pitää täyttää tähdillä.
+                Ne "leikkataan" pois kun muunnetaan takaisin plaintekstiksi.
+            </p>
+            <div class="code-bar">
+                <pre class="code-preview">
+                    <code id="aes_cbc">
+from Crypto.Cipher import AES
+
+print("\nWelcome to AES encryption tool created for Cybersecurity course in Samiedu, Savonlinna!")
+
+# show options to user
+while True:
+    option = input("""
+Options
+Encrypt plain text [1]
+Decrypt cipher text [2]
+Your choise: """)
+    try:
+        option = int(option)
+        if option in range(1,3):
+            break
+        else:
+            print("(!) Only two options available (1 or 2)")
+    except:
+        print("(!) Option must be integer")
+
+# create cipher object
+cifer_obj = AES.new('Samiedu as a secret key1', AES.MODE_CBC, 'This is an IV456')
+# change this var if mode is changed
+mode = "CBC"
+
+# Encryption
+if option == 1:
+    # get plain text as input value from command line
+    while True:
+        plaintext = input("Input plain text to encrypt: \n")
+        if plaintext != '':
+            break
+    # for AES block encryption in CBC mode string must be multiple of 16 in length
+    if mode == "CBC":
+        text_len = len(plaintext)
+        mod = text_len % 16
+        if mod != 0:
+            blocks =  text_len // 16 + 1
+            lack = 16 * blocks - text_len
+            tail = ''
+            for i in range(lack):
+                tail = tail + '*'
+            plaintext = plaintext + tail
+
+    # encrypt, plaintext encode to UTF-8
+    res = cifer_obj.encrypt(plaintext.encode())
+    # print result
+    print(f"Cipher text (hex format): {res.hex()}")
+
+# Decryption
+if option == 2:
+    # get ciphertext as input value from command line
+    while True:
+        ciphertext = input("Input ciphertext in hex format to decrypt: \n")
+        if ciphertext != '':
+            break
+    # decrypt
+    res = ''
+    try:
+        b_ciphertext = bytes.fromhex(ciphertext)
+        res = cifer_obj.decrypt(b_ciphertext)
+        # cut asterikses from the end of string
+        ptext = res.decode().strip("*")
+        # print result
+        print(f"Decrypted text: {ptext}")
+    except:
+        print("(!) Can't decrypt this ciphertext, check format of input (must be hex)")
+
+# greeting
+print("Thank you for using this tool! Greetings from Samiedu!")
+                    </code>
+                </pre>
+                <div class="tools">
+                    <button id="copy_btn" class="copy-btn" onclick="copyCode('aes_cbc')">Copy code</button>
+                </div>
+            </div>
+            <p>
+                Ohjelma tukee myös CFB (<a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Cipher FeedBack</a>) mode, jossa ei tarvi täyttää viimeista lohkoa jopa jos se on vajaa.
+                Vaihda AES objektin mode parametri AES.MODE_CFB:ksi ja myös muuttuja "mode" "CFB":ksi. Muutoin se toimii samalla tavalla.
+            </p>
+            <h4>RSA</h4>
+            <p>
+                RSA on saanut nimensä sen tekijöistä - Rivest, Shamir ja Adleman, jotka kuvasivat algoritmin julkisesti vuonna 1977. 
+                Se luottaa asymmetriseen kryptografiaan ja avainpareihin.
+            </p>
+            <p>
+                Tässä on nopea yleiskatsaus RSA-salauksen toimintaan:
+                <ol>
+                    <li>Jokainen käyttäjä luo “public key” ja “private key” avainparin. Private key pidetään salassa, kun taas public key voidaan levittää laajasti.</li>
+                    <li>Viestin salaamiseksi lähettäjä hakee vastaanottajan public key ja käyttää sitä tietojen salaamiseen.</li>
+                    <li>Salattujen tietojen salaus voidaan purkaa vain vastaanottajan ainutlaatuisella yksityisellä avaimella (private key).</li>
+                </ol>
+                Tämä asymmetrinen lähestymistapa mahdollistaa salatun tiedon turvallisen jakelun ilman, että symmetristä avainta on vaihdettava etukäteen. 
+                Kuka tahansa voi salata tiedot julkisella avaimella, mutta vain yksityisen avaimen haltija voi purkaa sen.
+            </p>
+            <p>
+                RSA-avaimet koostuvat julkisesta eksponentista ja moduulista sekä yksityisestä eksponentista. 
+                RSA:n turvallisuus riippuu <a href="https://en.wikipedia.org/wiki/RSA_cryptosystem">suurten alkulukujen faktoroinnin vaikeudesta</a>.
+                Riittävän turvallisuuden vuoksi RSA-avainten tulisi olla vähintään 2048 bittiä pitkiä. 
+                Jotkut suositukset ulottuvat jopa 3072-bittisiin avaimiin erittäin arkaluontoisille tiedoille.
+            </p>
+            <h4>Koodataan</h4>
+            <p>
+                Tällä kertaa käytämme python Cryptography kirjastoa pyCrypto:n sijaan. 
+                Se tukee uusia RSA-ominaisuuksia. Koodin rakenne on lähes samanlainen kuin edellisessä tapauksessa (AES-salauksessa). 
+                Ohjelma voi toimia kahteen suuntaan: salata teksti käyttäjän syötöstä public avaimella ja purkaa sitä takaisin private avaimella.
+                Käyttäjä lataa public tai private avaimen (riippuen valitusta vaihtoehdosta) tiedostosta, siksi pitkiä merkkijonoja ei tarvitse enää kopioida. 
+                Ohjelma tallentaa salatekstin txt-tiedostoon. Ota huomioon, että jos private avain on salattu salasanalla, 
+                sinun pitää syötää sen avattaessa avaimen tiedosto ja sinun on myös asennettava bcrypt-moduuli pythonille.
+            </p>
+            <div class="code-bar">
+                <pre class="code-preview">
+                    <code id="rsa">
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+
+# global var
+option = ""
+# greetings on start
+print("\nWelcome to RSA encryption tool created for Cybersecurity course in Samiedu, Savonlinna!")
+
+# options for user and their validation
+while True:
+    option = input("""
+Options
+Encrypt plain text [1]
+Decrypt cipher text [2]
+Your choise: """)
+    try:
+        option = int(option)
+        if option in range(1,3):
+            break
+        else:
+            print("(!) Only two options available (1 or 2)")
+    except:
+        print("(!) Option must be integer")
+
+# encrypt with public key
+if option == 1:
+    # obtain plaintext
+    while True:
+        plaintext = input("Input plain text to encrypt: \n")
+        if plaintext != '':
+            break
+
+    # load public key from file
+    while True:
+        path = input("Absolute path to your public key in SSH format (path/to/id_rsa.pub): \n")
+        if path != '':
+            with open(path, "rb") as key_file:
+                # serialize key to bytes
+                pub_key_serialized = serialization.load_ssh_public_key(
+                    key_file.read(),
+                )
+            break
+        else:
+            print("(!) Wrong path to file")
+
+    # encrypt
+    ciphertext = pub_key_serialized.encrypt(
+        # encode plain text to bytes, UTF-8 as default
+        plaintext.encode(),
+        # newest padding is OAEP, for hashing we use SHA256
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+    
+    # save cipher text to file
+    with open("ciphertext.txt", "w") as f:
+        f.write(ciphertext.hex())
+    # print result
+    print("Cipher text in hex format was saved to file ciphertext.txt")
+
+# decrypt with private key
+if option == 2:
+    # load cipher text from file
+    while True:
+        path = input("Absolute path to your ciphertext.txt file: \n")
+        if path != '':
+            with open(path, "r") as f:
+                ciphertext = f.read()
+                b_ciphertext = bytes.fromhex(ciphertext)
+            break
+        else:
+            print("(!) Wrong path to file")
+
+    # load private key from file
+    while True:
+        path = input("Path to private key file (path/to/id_rsa): \n")
+        password = input("Passphrase for key (leave empty if key is not encrypted): \n")
+        if password == '':
+            password = None
+        if path != '':
+            with open(path, "rb") as key_file:
+                # serialize key to bytes
+                pr_key_serialized = serialization.load_ssh_private_key(
+                    key_file.read(),
+                    password=password.encode(),
+                )
+            break
+        else:
+            print("(!) Wrong path to file")
+
+    # decrypt
+    plaintext = pr_key_serialized.decrypt(
+        b_ciphertext,
+        # newest padding is OAEP, for hashing we use SHA256
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+    
+    # print result
+    print(f"Decrypted text: {plaintext.decode()}")
+
+# greetings
+print("Thank you for using this tool! Greetings from Samiedu!")
+                    </code>
+                </pre>
+                <div class="tools">
+                    <button id="copy_btn" class="copy-btn" onclick="copyCode('rsa')">Copy code</button>
+                </div>
+            </div>
+            <h4>AES:n ja RSA:n vahvuuksien vertailu</h4>
+            <ul>
+                <li>
+                    RSA:n ensisijainen vahvuus on suurten alkulukujen faktorointi. 
+                    Tällä hetkellä ei ole tunnettuja tehokkaita algoritmeja, jotka voivat ratkaistaa sen. 
+                    “Brute force” on tunnetuin hyökkäys, mutta sillä on aika vaikea (melkein mahdotonta) purkaa salateksti. 
+                    AES:n vahvuus riippuu avaimen koosta. “Brute force”:lla on kokeiltava kaikkia mahdollisia avainmuutoksia. 
+                    Suuremmat avaimen koot lisäävät permutaatioita eksponentiaalisesti.
+                </li>
+                <li>
+                    Asymmetristen avainten avulla RSA voi tarjota toimintoja, joita AES ei voi vastata, 
+                    kuten digitaaliset allekirjoitukset ja yksityisten avainten jakelu. Mutta symmetrinen kryptografia on nopeampaa kuin asymmetrinen salaus. 
+                    AES-salaus/salauksen purku on paljon nopeampaa kuin RSA.
+                </li>
+                <li>
+                    Nopeamman suorituskyvyn ansiosta AES on erinomainen suurten tietomäärien joukkosalauksessa. 
+                    Suoratoistosalaukset mahdollistavat lähes rajattoman tiedon AES-salauksen. 
+                    RSA-salauksesta tulee käyttökelvoton suurille tietojoukoille sen laskentaintensiteetin vuoksi. 
+                    Se sopii paremmin pienille tiedoille. Esimerkiksi AES-256 toimii vähintään 100 kertaa nopeammin kuin 2048-bittinen RSA samanlaisissa laitteistoissa.
+                </li>
+                <li>
+                    Sekä riittävän suuria avainpareja käyttävää RSA:ta että 256-bittisiä avaimia sisältävää AES:ää pidetään erittäin turvallisena ja kestävänä “brute force” vastaan nykyaikaisilla tietokoneilla.
+                </li>
+            </ul>
         </article>
         <!-- grid sidebar -->
         <aside class="side">
