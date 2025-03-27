@@ -114,6 +114,12 @@ nav a:hover {
     color: black;
 }
 
+.portrait {
+    display: block;
+    margin: auto;
+    width: 60%;
+}
+
 /* SIDEBAR */
 
 .side {
