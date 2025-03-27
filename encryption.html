@@ -18,6 +18,9 @@
             <ul>
                 <li><a href="index.html">Kotisivu</a></li>
                 <li><a href="encryption.html">Salausmenetelmät</a></li>
+                <li><a href="hashing.html">Hash-funktiot</a></li>
+                <li><a href="cyberthreads.html">Kyberuhat</a></li>
+                <li><a href="about.html">About</a></li>
             </ul>
         </nav>
         <!-- grid content -->
@@ -114,7 +117,7 @@
             <p>
                 Kirjoitetaan Python koodi ja tehdään pienen ohjelman, joka tarjoa kaksi vaihtoehtoa: 
                 salaa käyttäjän syöttämä tekstin AES algoritmilla tai purkaa "ciphertext" takaisin tavalliseen muotoon.
-                Muista ensin installoida pyCrypro kirjasto, sieltä importoidaan AES mooduli.
+                Muista ensin installoida <a href="https://pypi.org/project/pycrypto/">pyCrypro</a> kirjasto, sieltä importoidaan AES mooduli.
                 Koodi sisältää perus validointia, eli tarkistetaan että käyttäjä antaa kelpoisia tietoja.
                 Ohjelma palauta ciphertext HEX-muodossa ja vaatii, että samassa muodossa sille annetaan salateksti purkamiseen.
                 Seuraavassa tapauksessa salaus tehdään CBC-mode:ssa (<a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Cipher Block Chaining</a>), siksi viimeinen vajaa 128-bitti lohko pitää täyttää tähdillä.
@@ -226,12 +229,12 @@ print("Thank you for using this tool! Greetings from Samiedu!")
             </p>
             <h4>Koodataan</h4>
             <p>
-                Tällä kertaa käytämme python Cryptography kirjastoa pyCrypto:n sijaan. 
+                Tällä kertaa käytämme python <a href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/#">Cryptography</a> kirjastoa pyCrypto:n sijaan. 
                 Se tukee uusia RSA-ominaisuuksia. Koodin rakenne on lähes samanlainen kuin edellisessä tapauksessa (AES-salauksessa). 
                 Ohjelma voi toimia kahteen suuntaan: salata teksti käyttäjän syötöstä public avaimella ja purkaa sitä takaisin private avaimella.
                 Käyttäjä lataa public tai private avaimen (riippuen valitusta vaihtoehdosta) tiedostosta, siksi pitkiä merkkijonoja ei tarvitse enää kopioida. 
                 Ohjelma tallentaa salatekstin txt-tiedostoon. Ota huomioon, että jos private avain on salattu salasanalla, 
-                sinun pitää syötää sen avattaessa avaimen tiedosto ja sinun on myös asennettava bcrypt-moduuli pythonille.
+                sinun pitää syötää sen avattaessa avaimen tiedosto ja sinun on myös asennettava <a href="https://pypi.org/project/bcrypt/">bcrypt</a>-moduuli pythonille.
             </p>
             <div class="code-bar">
                 <pre class="code-preview">

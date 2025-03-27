@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./static/styles.css">
+    <script src="./js/script.js"></script>
+    <title>Kyberturvallisuus</title>
+</head>
+<body>
+    <!-- page wrapper -->
+    <div class="wrapper">
+        <!-- grid header -->
+        <header class="main-header">
+            <a class="logo" href="index.html">SERGIIN KYBERTURVALLISUUS</a>
+        </header>
+        <!-- grid nav -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Kotisivu</a></li>
+                <li><a href="encryption.html">Salausmenetelmät</a></li>
+                <li><a href="hashing.html">Hash-funktiot</a></li>
+                <li><a href="cyberthreads.html">Kyberuhat</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <!-- grid content -->
+        <article class="content">
+            <h1>Hash-funktiot</h1>
+            <p>
+                Hash-funktioilla on tärkeä rooli kyberturvallisuudessa, sillä ne tarjoavat tietojen eheyden hallintaa, 
+                todentamista, salasanojen tallennusta turvallisessa muodossa ja mahdollisuutta toteuttaa digitaalisia allekirjoituksia. 
+                Hash-funktiot ovat pohjimmiltaan matemaattisia algoritmeja, jotka muuntavat syötetiedot (teksti, tiedosto, viesti) kiinteäksi merkkijonoksi, jota kutsutaan hashiksi. 
+                Sillä voidaan nopeasti tarkistaa tiedoissa tapahtuvat muutokset ja suojata niitä väärentämiseltä.
+            </p>
+            <h3>SWOT analyysi</h3>
+            <p>
+                Tehdään hash-funktioiden SWOT-analyysi (Strengths, Weaknesses, Opportunities, Threats), jossa lyhyesti kerotaan niiden
+                käytöstä (mahdollisuuksista), vahvuuksista, heikkouksista ja tietenkin uhista.
+            </p>
+            <h4>Mahdollisuudet (käyttö)</h4>
+            <p>
+                <ol>
+                    <li>
+                        <strong>Salasanojen tallentaminen.</strong> Kun käyttäjä luo salasanan, järjestelmä ei tallenna sitä tavallisena tekstinä, 
+                        vaan tallentaa sen hash. Kun syötetään salasanan sisäänkirjautumisen yhteydessä, 
+                        hash lasketaan uudelleen ja järjestelmä vertaa tuloksena olevaa hash tallennettuun. 
+                        Tämä vaikeuttaa hyökkääjien saada salasanoja jopa tietokantavuodon sattuessa.
+                    </li>
+                    <li>
+                        <strong>Tietojen eheyden tarkistus.</strong> Tietojen siirto ja tallennus voivat olla alttiina muutoksille 
+                        (esim. hyökkäyksille tai laitteistovikojen vuoksi). Varmistaakseen, että tietoa ei ole muokattu, 
+                        sen hash tarkistetaan ennen siirtoa ja sen jälkeen.
+                    </li>
+                    <li>
+                        <strong>Digitaaliset allekirjoitukset ja tunnistautuminen.</strong> Digitaalisissa allekirjoituksissa hash-funktioita lasketaan 
+                        viestin hash ennen salausta yksityisellä avaimella. Näin voidaan tarkistaa allekirjoitukset nopeasti salaamatta suuria tietomääriä.
+                    </li>
+                    <li>
+                        <strong>Yksilöllisten tunnisteiden luominen.</strong> Hasheja käytetään blockchain teknologiaassa tapahtumien 
+                        ja block:n tunnistamiseen. Myös tietokannoissa ne auttavat luomaan yksilöllisiä tunnisteita jokaiselle riville (ID).
+                    </li>
+                </ol>
+            </p>
+            <h4>Vahvuukset</h4>
+            <p>
+                <ul>
+                    <li>Hash-funktiot toimivat nopeasti ja voivat käsitellä suuria tietomääriä lyhyessä ajassa.</li>
+                    <li>Alkuperäisten tietojen palauttaminen hashista on mahdotonta (one-way function), mikä lisää turvallisuutta.</li>
+                    <li>Kaikki tiedostoon tai viestiin tehdyt muutokset johtavat hash:n muutokseen.</li>
+                </ul>
+            </p>
+            <h4>Heikkoukset</h4>
+            <p>
+                Huolimatta niiden merkityksestä tietojen suojaamisessa, hash-funktioilla on tiettyjä heikkouksia ja haavoittuvuuksia, 
+                joita hyökkääjät voivat hyödyntää. Keskeisiä ongelmia ovat törmäykset (collision attacks), “brute-force” ja vanhojen algoritmien haavoittuvuudet:
+                <ul>
+                    <li>Törmäys (collision) tapahtuu, kun kaksi eri syötearvoa tuottavat saman tiivisteen. Täydellisen hash-funktion pitäisi tehdä tästä prosessista käytännössä mahdoton, mutta heikoissa algoritmeissa törmäykset löytyvät suhteellisen nopeasti. Vuonna 2004 todistettiin, että MD5 voidaan murtaa muutamassa sekunnissa. Vuonna 2017 Googlen ja CWI Amsterdamin tutkijat löysivät törmäyksen SHA-1:ssä, mikä teki tästä algoritmista vaarallisen.</li>
+                    <li>Vaikka hash-funktio on peruuttamaton (one-way), se voidaan rikkoa yksinkertaisesti poimimalla arvoja tai käyttämällä ennalta laskettuja hash-taulukoita. Sitä hyödynnetään brute-force ja Rainbow-table hyökkäyksessä.</li>
+                </ul>
+            </p>
+            <h4>Uhat</h4>
+            <p>
+                <h4><a href="https://en.wikipedia.org/wiki/Collision_attack">Collision attacks</a></h4>
+                <ul>
+                    <li>Birthday Attack käyttää "syntymäpäiväparadoksin" tilastollista periaatetta nopeuttaakseen kahden eri viestin löytämistä samalla hash:lla.</li>
+                    <li>Prefix Discovery Attack käytetään luomaan kaksi asiakirjaa, joissa on sama hash, jonka avulla hyökkääjät voivat väärentää digitaalisia allekirjoituksia.</li>
+                </ul>
+                <i>Miten estää?</i> Käytä kryptografisesti vahvoja algoritmeja, kuten SHA-256, jolla on huomattavasti korkeampi suojaustaso.
+            </p>
+            <p>
+                <h4><a href="https://en.wikipedia.org/wiki/Brute-force_attack">Brute-force attacks</a></h4>
+                <ul>
+                    <li>Brute-force hyökkäyksessä hyökkääjä yksinkertaisesti kokeilee kaikkia mahdollisia yhdistelmiä, kunnes löytää oikeaa. Riittävän pitkillä ja monimutkaisilla salasanoilla tämä vie paljon aikaa, mutta heikkoilla salasanoilla tämä menetelmä on erittäin tehokas.</li>
+                    <li>Rainbow Tables hyökkäyksessä loukkaaja käyttääovat suuria tietokantoja, jotka sisältävät ennalta laskettuja hash:ja yleisimmin käytetyille salasanoille. Jos salasana tiivistetään ilman lisäturvatoimenpiteitä (esim. ilman "suolaa"), se löytyy helposti tällaisista taulukoista.</li>
+                </ul>
+                <i>Miten estää?</i> Käytä "suolaa" - satunnaista arvoa, joka lisätään salasanaan ennen hashing. Tämä tekee hashista ainutlaatuisen jopa identtisille salasanoille. Käytä hitaita hash-algoritmeja salasanoissa (esim. bcrypt, scrypt, Argon2), jotka on erityisesti suunniteltu vastustamaan brute-force hyökkäyksiä.
+            </p>
+            <p>
+                <h4>Vanhojen hash-algoritmien haavoittuvuus</h4>
+                Jotkin aiemmin turvallisiksi pidetyt hash-funktiot rikkoutuvat nykyään helposti uusilla hakkerointimenetelmillä. MD5 altis törmäyksille, rikkoutuu nopeasti jopa tavallisessa tietokoneessa. SHA-1 myös tunnustettiin virallisesti epäluotettavaksi.
+                <br><i>Miten estää?</i> Käytä nykyaikaisia algoritmeja: SHA-256, SHA-3. Päivitä kryptografiset järjestelmät uusien kyberturvallisuussuositusten mukaisesti.
+            </p>
+            <p>
+                <h4>Kvanttitietokoneet</h4>
+                Kvanttitietokoneiden myötä monet nykyiset salausalgoritmit voivat tulla haavoittuvia.
+                <ul>
+                    <li>Grover's algoritmi mahdollistaa kvanttitietokoneen löytää törmäyksiä hash-funktioissa monta kertaa nopeammin kuin perinteinen vastaavuus. Tämä tarkoittaa, että SHA-256 murtuu suunnilleen yhtä nopeasti kuin tavallinen tietokone tällä hetkellä murtaa SHA-128.</li>
+                </ul>
+                <i>Miten estää?</i> Käytä SHA-3 tai postkvanttisalausalgoritmeja. Seuraa tutkimusta kvanttiresistenttien hash-funktioiden alalla.
+            </p>
+            <p>
+                <h4>Hash-funktioiden käyttö haitallisiin tarkoituksiin</h4>
+                <ul>
+                    <li>Hash obfuscation in malware - virukset voivat tallentaa haitalliset allekirjoituksensa hash-muodossa estääkseen virustentorjuntaohjelman havaitsemisen.</li>
+                    <li>Käyttäjien huijaamiseen. Hyökkääjät voivat käyttää hash väärennettyjen tiedostojen tai varmenteiden luomiseen.</li>
+                </ul>
+                <i>Miten estää?</i> Käytä kaksivaiheista tietojen eheyden vahvistusta (ei vain hash-varmennusta, vaan myös muita vahvistusmekanismeja). Käytä luotettaviin varmenteisiin perustuvaa todennusta.
+            </p>
+            <h4>MD5</h4>
+            <p>
+                <a href="https://en.wikipedia.org/wiki/MD5">Message Digest Algorithm 5</a> kehitettiin vuonna 1991 ja sitä käytettiin laajalti 2000-luvun alkuun saakka. Hash-pituus 128 bittiä (32 merkkiä heksadesimaalimuodossa). “Collision” menetelmät mahdollistavat kahden eri arvon luomisen samalla hash:llä. MD5:tä ei tällä hetkellä suositella salaustarkoituksiin, mutta sitä käytetään tiedostojen tarkistussummiin (esim. Bit-torrent).
+            </p>
+            <h4>SHA-256</h4>
+            <p>
+                <a href="https://en.wikipedia.org/wiki/SHA-2">Secure Hash Algorithm</a> 256-bit on osa SHA-2-perhettä, jonka on kehittänyt US National Institute of Standards and Technology (NIST). Hash-pituus: 256 bittiä, eli 64 merkkiä heksadesimaalimuodossa. On erittäin vaikeaa löytää kahta eri arvoa samalla tiivisteellä. Tämä hash-funktio on käytössä blockchain-teknologiaassa (esim. Bitcoin), digitaalisissa allekirjoituksissa ja suojausvarmenteissa. Tähän mennessä ei ole löydetty tehokkaita menetelmiä SHA-256:n murtamiseen.
+            </p>
+            <h4>Koodataan</h4>
+            <p>
+                Luodaan taas yksinkertaisen ohjelman minun suosikki kielelläni, eli pythonilla. 
+                Käyttäjä voi helposti saada sha-256 hash-arvon syötetylle tekstille. 
+                Perinteisesti ohjelma toimii CLI-tilassa. Hash-moduulina toimii jo tuttu meille <a href="https://cryptography.io/en/latest/hazmat/primitives/cryptographic-hashes/#cryptography.hazmat.primitives.hashes.Hash">Cryptography</a>-kirjasto 
+                (ks. <a href="encryption.html#rsa">RSA-salaus</a>).
+            </p>
+            <div class="code-bar">
+                <pre class="code-preview">
+                    <code id="sha256">
+from cryptography.hazmat.primitives import hashes
+
+# greetings on start
+print("\nWelcome to SHA-256 hashing tool created for Cybersecurity course in Samiedu, Savonlinna!")
+
+# get text from user
+while True:
+    msg = input("Input your message:\n")
+    if msg != '':
+        break
+    else:
+        print("Please, input message!")
+
+# create new hash object
+hash_obj = hashes.Hash(hashes.SHA256())
+
+# count hash
+hash_obj.update(msg.encode())
+
+# get hash in bytes
+hash_val = hash_obj.finalize()
+
+# print result in hex
+print(f"Hash of your message is: {hash_val.hex()}")
+
+# final greetings
+print("Thank you for using this tool! Greetings from Samiedu!")
+                    </code>
+                </pre>
+                <div class="tools">
+                    <button id="copy_btn" class="copy-btn" onclick="copyCode('sha256')">Copy code</button>
+                </div>
+            </div>
+            <div class="code-bar">
+                <pre class="code-preview">
+                    <code>
+Welcome to SHA-256 hashing tool created for Cybersecurity course in Samiedu, Savonlinna!
+Input your message:
+Samiedu-CyberSecurity course
+Hash of your message is: 929c21a6e57e11414529ac907318812d5f4b6bd2b593a6be52063f2b3dffb1e4
+Thank you for using this tool! Greetings from Samiedu!
+                    </code>
+                </pre>
+            </div>
+            <h4>Koodataan</h4>
+            <p>
+                Entä jos haluamme tallentaa verkkosovellustemme salasanat ja 
+                toteuttaa todennusmenettelyn sisäänkirjautumisen yhteydessä käyttämällä hash:ja?
+                Ensinnäkin meidän on valittava vahva hash-funktio, tässä tapauksessa SHA-256. 
+                Sitten keksimme "suolan" salasanalle, joka tekee siitä vahvemman. Otetaan... toinen hash-funktio - MD5. 
+                Joten laitamme SHA-256-salasanan, joka sisältää tekstin + MD5-hash arvon. 
+                Tämä voi auttaa estämään suurimman osan tunnetuista brute-force hyökkäyksistä, 
+                mutta tietysti myös salasanan tulee olla vahva (vähintään 8 merkkiä pitkä, eri merkkejä ja numeroita, ei saa sisältää sanoja).
+                Backend (tietokannan) puolelle kirjoitetaan salasanojen hash-funktio Oracle:n <a href="https://en.wikipedia.org/wiki/PL/SQL">pl/sql</a> kielellä, 
+                tunnistautuminen-funktio ja myös kirjautumis-procedure. Meidän tarkoituksiin on sopivaa oracle <a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/arpls/DBMS_CRYPTO.html">dbms_crypto</a>-kirjasto, 
+                joka sisältää sekä MD5 että SHA-256 hash-funktiot.
+            </p>
+            <div class="code-bar">
+                <pre class="code-preview">
+                    <code id="passhashing">
+create or replace package LOGIN_PKG is
+
+    function pass_hash(pass_string varchar2) return raw;
+    function user_auth(p_username varchar2, p_password varchar2) return boolean;
+    procedure app_login(p_username varchar2, p_password varchar2);
+
+end LOGIN_PKG;
+/
+create or replace package body LOGIN_PKG is
+
+    function pass_hash (pass_string varchar2) return raw as
+    begin
+        -- salt, convert password to plaintext + MD5
+        pass_string := pass_string || UTL_RAW.RAW_TO_CAST(DBMS_CRYPTO.HASH (
+                UTL_RAW.CAST_TO_RAW(pass_string),
+                DBMS_CRYPTO.HASH_MD5
+            ));
+        -- password as SHA-256 hash value
+        return DBMS_CRYPTO.HASH (
+                UTL_RAW.CAST_TO_RAW(pass_string),
+                DBMS_CRYPTO.HASH_SH256
+            );
+    end;
+    --------------------------------------
+    function user_auth(p_username varchar2, p_password varchar2) return boolean as
+        v_password varchar2(100);
+        enc_pass raw(2000);
+    begin
+        -- password or username is not specified
+        if p_username is null or p_password is null then
+            return false;
+        end if;
+
+        -- check username and select user data for session
+        select user_password
+        into   v_password
+        from   users
+        where  lower(user_name) = lower(p_username);
+        exception
+        when no_data_found then
+            -- user not found
+            return false;
+
+        -- encrypt and check password
+        enc_pass := pass_hash(p_password);
+        if upper(v_password) <> enc_pass then
+            -- password incorrect
+            return false;
+        end if;
+
+        -- authentication successful
+        return true;
+    end;
+    --------------------------------------
+    procedure app_login(p_username varchar2, p_password varchar2) as
+        v_result boolean := false;
+    begin
+        v_result := user_auth(p_username, p_password);
+
+        if v_result = true then
+        -- redirect to home page
+        else
+        -- login failure, redirect to login page
+        end if;
+    end;
+    
+end LOGIN_PKG;
+/
+                    </code>
+                </pre>
+                <div class="tools">
+                    <button id="copy_btn" class="copy-btn" onclick="copyCode('passhashing')">Copy code</button>
+                </div>
+            </div>
+        </article>
+        <!-- grid sidebar -->
+        <aside class="side">
+            <div class="newsfeed">
+                <!-- start sw-rss-feed code --> 
+                <script type="text/javascript"> 
+                    rssfeed_url = new Array(); 
+                    rssfeed_url[0]="https://feeds.feedburner.com/TheHackersNews";  
+                    rssfeed_frame_width="250"; 
+                    rssfeed_frame_height="600"; 
+                    rssfeed_scroll="on"; 
+                    rssfeed_scroll_step="6"; 
+                    rssfeed_scroll_bar="off"; 
+                    rssfeed_target="_blank"; 
+                    rssfeed_font_size="12"; 
+                    rssfeed_font_face=""; 
+                    rssfeed_border="on"; 
+                    rssfeed_css_url="https://feed.surfing-waves.com/css/style6.css"; 
+                    rssfeed_title="on"; 
+                    rssfeed_title_name=""; 
+                    rssfeed_title_bgcolor="#3366ff"; 
+                    rssfeed_title_color="#fff"; 
+                    rssfeed_title_bgimage=""; 
+                    rssfeed_footer="off"; 
+                    rssfeed_footer_name="rss feed"; 
+                    rssfeed_footer_bgcolor="#fff"; 
+                    rssfeed_footer_color="#333"; 
+                    rssfeed_footer_bgimage=""; 
+                    rssfeed_item_title_length="50"; 
+                    rssfeed_item_title_color="#666"; 
+                    rssfeed_item_bgcolor="#fff"; 
+                    rssfeed_item_bgimage=""; 
+                    rssfeed_item_border_bottom="on"; 
+                    rssfeed_item_source_icon="off"; 
+                    rssfeed_item_date="off"; 
+                    rssfeed_item_description="on"; 
+                    rssfeed_item_description_length="120"; 
+                    rssfeed_item_description_color="#666"; 
+                    rssfeed_item_description_link_color="#333"; 
+                    rssfeed_item_description_tag="off"; 
+                    rssfeed_no_items="0"; 
+                    rssfeed_cache = "fa3e4a9d370a34f62044c2418f45cecf"; 
+                </script>
+                <script type="text/javascript" src="https://feed.surfing-waves.com/js/rss-feed.js"></script> 
+                <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
+                <div style="color:#ccc;font-size:10px; text-align:right; width:250px;">
+                    powered by <a href="https://surfing-waves.com" rel="noopener" target="_blank" style="color:#ccc;">Surfing Waves</a>
+                </div> 
+                <!-- end sw-rss-feed code -->
+            </div>
+        </aside>
+        <!-- grid footer -->
+        <footer class="main-footer">
+            <span>
+                Sergii Mishchaniuk<br>
+                <strong>SAMIEDU 2025 &#169;</strong>
+            </span>
+        </footer>
+    </div>
+</body>
+</html>
